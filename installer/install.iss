@@ -33,6 +33,7 @@
 ; Compiler-related
 Compression=lzma2/ultra64
 LZMAUseSeparateProcess=yes
+LZMANumBlockThreads=2
 #ifdef OUTPUT_TO_TEMP
 OutputBaseFilename={#FILENAME_VERSION}
 OutputDir={#GetEnv('TEMP')}
