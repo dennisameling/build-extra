@@ -4,6 +4,7 @@ on: pull_request
 
 env:
   GIT_CONFIG_PARAMETERS: "'checkout.workers=56'"
+  MSYSTEM: MINGW64
 
 jobs:
   determine-packages:
