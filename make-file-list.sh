@@ -5,6 +5,8 @@ die () {
 	exit 1
 }
 
+# Hello world!
+
 test -n "$ARCH" &&
 test -n "$BITNESS" ||
 die "Need ARCH and BITNESS to be set"
