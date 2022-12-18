@@ -246,7 +246,7 @@ update_git_for_windows () {
 	fi
 
 	version=$(git --version | sed "s/git version //")
-	if test -d /arm64/bin
+	if test -d /clangarm64/bin
 	then
 		arch_bit=ARM64
 	else
