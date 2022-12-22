@@ -4863,12 +4863,17 @@ build_mingw_w64_git () { # [--only-i686] [--only-x86_64] [--only-aarch64] [--ski
 	die "Could not initialize %s\n" $git_src_dir
 
 	which git
+	git config --list --show-origin
 
 	git push --verbose $git_src_dir $tag ||
 	die "Could not push %s\n" $tag
 
+	echo "Verbose 1"
+
 	# Work around bug where the incorrect xmlcatalog.exe wrote /etc/xml/catalog
 	sed -i -e 's|C:/git-sdk-64-ci||g' /etc/xml/catalog
+
+	echo "Verbose 2"
 
 	test true = "$GITHUB_ACTIONS" || # GitHub Actions' agents have the mspdb.dll, and cv2pdb finds it
 	test -n "$SYSTEM_COLLECTIONURI$SYSTEM_TASKDEFINITIONSURI" || # Same for Azure Pipelines
