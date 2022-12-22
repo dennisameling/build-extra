@@ -766,7 +766,7 @@ pkg_build () {
 			 case "$(test -x /usr/bin/git && cat .git/objects/info/alternates 2>/dev/null)" in
 			 /*)
 				echo "dissociating worktree, to allow MINGW Git to access the worktree" >&2 &&
-				/usr/bin/git repack -ad &&
+				/usr/bin/git repack -ad --threads=0 &&
 				rm .git/objects/info/alternates
 				;;
 			 esac &&
@@ -2718,7 +2718,7 @@ upgrade () { # [--directory=<artifacts-directory>] [--only-mingw] [--no-build] [
 		 case "$(test -x /usr/bin/git && cat .git/objects/info/alternates 2>/dev/null)" in
 		 /*)
 			echo "dissociating worktree, to allow MINGW Git to access the worktree" >&2 &&
-			/usr/bin/git repack -ad &&
+			/usr/bin/git repack -ad --threads=0 &&
 			rm .git/objects/info/alternates ||
 			die "Could not dissociate src/msys2-runtime\n"
 			;;
@@ -4885,7 +4885,8 @@ build_mingw_w64_git () { # [--only-i686] [--only-x86_64] [--only-aarch64] [--ski
 	 MAKEFLAGS=${MAKEFLAGS:--j$(nproc)} makepkg-mingw -s --noconfirm $force -p PKGBUILD.$tag &&
 	 if test -n "$src_pkg"
 	 then
-		git -C git repack -adf &&
+	 	# --threads=0 ensures to use multiple cores on multi-core machines
+		git -C git repack -adf --threads=0  &&
 		MAKEFLAGS=${MAKEFLAGS:--j$(nproc)} MINGW_ARCH=mingw64 makepkg-mingw $force --allsource -p PKGBUILD.$tag
 	 fi) ||
 	die "Could not build mingw-w64-git\n"
